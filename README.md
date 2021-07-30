@@ -1,6 +1,8 @@
-# Deep_Q_learning
+# Deep Q Learning
 Deep Q Learning on Atari Breakout
 
+## Intro
+This is for studying reinforcement learning in simulation space.
 
 ## Installation guide
 - environment
@@ -25,7 +27,7 @@ pip uninstall atari_py
 pip install --no-index -f https://github.com/Kojoley/atari-py/releases atari_py
 ```
 ## Demo
-- Random test
+- Random test      
 ![img](./img/random_test.png)
 
 ## Contributors
