@@ -9,12 +9,13 @@ import torch.optim as optim
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 from model.q_network import QNetwork, Trainer
+from model.q_network import explore
 
 env = gym.make('FrozenLake-v0')
 policy = QNetwork(num_state=env.observation_space.n, num_action=env.action_space.n).to(device)
 
 # Set learning parameters
-num_epoch = 200
+num_epoch = 3000
 trainer = Trainer(policy)
 
 episode_reward, episode_length = [], []
@@ -26,22 +27,26 @@ for epoch in range(num_epoch):
 
     episode_reward.append(0.0)
     episode_length.append(0)
-
-    done = False
     while True:
         policy.train()
-        action, prediction = policy(state)
+        pred = policy(state)
+        value, action = torch.max(pred, dim=-1)
+        action = explore(value, action, env.action_space.n)
+        state, reward, done, info = env.step(action.item())
 
-        state_, reward, done, info = env.step(action.item())
-        trainer.train(prediction, action, reward)
+        policy.eval()
+        target = policy(state)
+        trainer.train(pred, target, reward)
 
         episode_reward[-1] += reward
         episode_length[-1] += 1
-        state = state_
         if done:
-            print(f"[{epoch:04}] episode_reward: {episode_reward[-1]}, episode_length: {episode_length[-1]}")
+            print(f"[{epoch:05}] episode_reward: {episode_reward[-1]}, episode_length: {episode_length[-1]}")
             break
 print(f"*** mean reward: {sum(episode_reward) / len(episode_reward)}, mean length: {sum(episode_length) / len(episode_reward)}")
 for i in range(env.observation_space.n):
-    print(policy(i)[1].tolist())
+    print(policy(i).tolist())
 env.close()
+
+plt.plot(episode_reward)
+plt.show()
