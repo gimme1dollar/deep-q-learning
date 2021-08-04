@@ -27,8 +27,14 @@ pip uninstall atari_py
 pip install --no-index -f https://github.com/Kojoley/atari-py/releases atari_py
 ```
 ## Demo
-- Random test      
+- Random test (Breakout)
 ![img](./img/random_test.png)
+
+- Q Learning (FrozenLake)
+![img](./img/q_learning.PNG)
+
+- Q Network (FrozenLake)
+![img](./img/q_network.PNG)
 
 ## Contributors
 이주용 안석준
