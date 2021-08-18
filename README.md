@@ -1,5 +1,5 @@
 # Deep Q Learning
-Deep Q Learning on Atari Breakout
+Deep Q Learning on Atari
 
 ## Intro
 This is for studying reinforcement learning in simulation space.
@@ -26,15 +26,20 @@ pip install pygame
 pip uninstall atari_py
 pip install --no-index -f https://github.com/Kojoley/atari-py/releases atari_py
 ```
+
 ## Demo
-- Random test (Breakout)     
-![img](./img/random_test.png)
+- Random test (Breakout)      
+<img src="./img/random_test.png" width="600"/>
 
-- Q Learning (FrozenLake)     
-![img](./img/q_learning.PNG)
+- Q Learning (FrozenLake)      
+<img src="./img/q_learning.PNG" width="500"/>
 
-- Q Network (FrozenLake)     
-![img](./img/q_network.PNG)
+- Q Network (FrozenLake)         
+<img src="./img/q_network.PNG" width="500"/>  
+
+- DQN (SpaceInvaders)        
+<img src="./img/dqn.png" width="350" height ="400"/>
+<img src="./img/dqn_demo.gif" width="250" height ="400"/> 
 
 ## Contributors
 이주용 안석준
