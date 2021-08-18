@@ -29,17 +29,19 @@ pip install --no-index -f https://github.com/Kojoley/atari-py/releases atari_py
 
 ## Demo
 - Random test (Breakout)      
-<img src="./img/random_test.png" width="600"/>
+<p align="center"> <img src="./img/random_test.png" width="500"/> </p>
 
 - Q Learning (FrozenLake)      
-<img src="./img/q_learning.PNG" width="500"/>
+<p align="center"> <img src="./img/q_learning.PNG" width="500"/> </p>
 
 - Q Network (FrozenLake)         
-<img src="./img/q_network.PNG" width="500"/>  
+<p align="center"> <img src="./img/q_network.PNG" width="500"/> </p>  
 
 - DQN (SpaceInvaders)        
-<img src="./img/dqn.png" width="350" height ="400"/>
-<img src="./img/dqn_demo.gif" width="250" height ="400"/> 
+<p align="center"> 
+<img src="./img/dqn_demo.gif" width="500"/>         
+<img src="./img/dqn.png" width="500" />       
+</p>
 
 ## Contributors
 이주용 안석준
