@@ -10,12 +10,10 @@ from model.dqn import ReplayBuffer, select_epilson_greedy_action
 from util.schedule import LinearSchedule
 from util.gym import get_env, get_wrapper_by_name
 
-
 import torch
 import torch.optim as optim
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-env = gym.make('BreakoutDeterministic-v4')
 # Hyperparameters
 env_name = "SpaceInvadersNoFrameskip-v0"
 env = get_env(env_name, 0)
@@ -71,6 +69,7 @@ mean_episode_reward = -float('nan')
 best_mean_episode_reward = -float('inf')
 
 # Logger
+eval_reward = -float('inf')
 eval_steps, eval_rewards, eval_q_values = [], [], []
 
 # Main loop
@@ -117,9 +116,8 @@ with tqdm(total=total_timestep) as pbar:
 
         # Logger
         episode_rewards = get_wrapper_by_name(env, "Monitor").get_episode_rewards()
-        if len(episode_rewards) > 0:
+        if len(episode_rewards) > 100:
             mean_episode_reward = np.mean(episode_rewards[-100:])
-        elif len(episode_rewards) > 100:
             best_mean_episode_reward = max(best_mean_episode_reward, mean_episode_reward)
 
         # Evaluation
@@ -138,12 +136,13 @@ with tqdm(total=total_timestep) as pbar:
                 for state in validation_buffer.get_all_frames():  # Iterate over valid states
                     state = (torch.from_numpy(state).type(torch.cuda.FloatTensor) / 255.0)[None, ...]
                     qs.append(policy(state).max(1)[0].item())
+            eval_reward = max(np.mean(episode_rewards[-5:]), eval_reward)
             eval_steps.append(t)
-            eval_rewards.append(np.mean(episode_rewards[-5:]))
+            eval_rewards.append(eval_reward)
             eval_q_values.append(np.mean(qs))
             tqdm.write("===============Validation=================")
-            tqdm.write(f"Rewards {eval_steps[-1]}")
-            tqdm.write(f"steps {eval_rewards[-1]}")
+            tqdm.write(f"Rewards {eval_rewards[-1]}")
+            tqdm.write(f"steps {eval_steps[-1]}")
             tqdm.write(f"mean Q-values {eval_q_values[-1]}")
             tqdm.write("\n")
 
