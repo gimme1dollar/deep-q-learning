@@ -25,6 +25,7 @@ pip install "gym[atari]"
 pip install pygame
 pip uninstall atari_py
 pip install --no-index -f https://github.com/Kojoley/atari-py/releases atari_py
+pip install -r requirements.txt
 ```
 
 ## Demo
